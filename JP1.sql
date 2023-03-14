@@ -1,6 +1,6 @@
 select * from employees;
 
--- CREAR LA TABLA EMP_HISTORY a partir de employees, pero vacía
+-- CREAR LA TABLA EMP_HISTORY a partir de employees, pero vacï¿½a
 create table emp_history as
     (select * from employees where 1 = 2);
 
@@ -32,7 +32,7 @@ select versions_starttime, versions_endtime, employee_id
     ;
     
     
----- CREAR TABLA poniéndole nombres a las CONSTRAINTS
+---- CREAR TABLA poniï¿½ndole nombres a las CONSTRAINTS
 CREATE TABLE hr.copy_emp
     (legajo NUMBER(3) CONSTRAINT legajo_pk PRIMARY KEY,   ------PRIMARY KEY
     apellido VARCHAR2(30) CONSTRAINT apellido_nn NOT NULL, -----NOT NULL
@@ -77,5 +77,7 @@ DROP TABLE hr.copy_emp;
 select * from employees;
     
 select * from emp_history;
+
+
     
     
