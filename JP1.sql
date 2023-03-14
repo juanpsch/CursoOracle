@@ -13,7 +13,7 @@ USING employees e
 ON (e.EMPLOYEE_ID = h.EMPLOYEE_ID)
     WHEN MATCHED THEN
         UPDATE SET h.salary = e.salary
-       -- WHERE <update_condition>
+        WHERE h.salary != e.salary
         --[DELETE WHERE <delete_condition>]
     WHEN NOT MATCHED THEN
         INSERT (h.EMPLOYEE_ID, h.FIRST_NAME, h.LAST_NAME, h.EMAIL, h.PHONE_NUMBER, h.HIRE_DATE, h.JOB_ID, h.SALARY, h.COMMISSION_PCT, h.MANAGER_ID, h.DEPARTMENT_ID)
@@ -22,10 +22,14 @@ ON (e.EMPLOYEE_ID = h.EMPLOYEE_ID)
 ;
 
 
+UPDATE EMP_HISTORY
+    SET salary = 2700
+    WHERE salary = 2600
+    ;
 
 
 --Seleccion de version de dato de FLASHBACK
-select versions_starttime, versions_endtime, employee_id
+select VERSIONS_STARTTIME, VERSIONS_ENDTIME, EMPLOYEE_ID
     from emp_history
     versions between scn minvalue and maxvalue
     where employee_id=183
@@ -41,12 +45,12 @@ CREATE TABLE hr.copy_emp
     dpto NUMBER(4),
     correo VARCHAR2(35),
     fec_alta DATE DEFAULT SYSDATE,
-    CONSTRAINT correo_un UNIQUE(correo),   ---CONSTRAINT DE UNIQUE CONSTRAINT 
+    CONSTRAINT correo_un UNIQUE(correo),        ---CONSTRAINT DE UNIQUE CONSTRAINT 
     CONSTRAINT salario_ch CHECK(salario > 0),   ---CONSTRAINT DE CHECK
-    CONSTRAINT dpto_fk FOREIGN KEY (dpto) ------FOREIGN KEY
-        REFERENCES departments(department_id)  ------FOREIGN KEY
-        ON DELETE SET NULL   ------poner en nulo la referencia al padre
-        --CASCADE    ------Borrar los registros correspondientes
+    CONSTRAINT dpto_fk FOREIGN KEY (dpto)       ------FOREIGN KEY
+        REFERENCES departments(department_id)   ------FOREIGN KEY
+        ON DELETE SET NULL                      ------poner en nulo la referencia al padre
+        --CASCADE                               ------Borrar los registros correspondientes
     )
 ;
 
